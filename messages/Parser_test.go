@@ -2,7 +2,7 @@ package messages
 
 import (
 	"fmt"
-	"github.com/jteeuwen/go-pkg-xmlx"
+	"github.com/mattn/go-pkg-xmlx"
 	"strings"
 	"testing"
 )
