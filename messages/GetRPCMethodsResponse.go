@@ -3,10 +3,11 @@ package messages
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/jteeuwen/go-pkg-xmlx"
 	"strconv"
 	"strings"
 	"time"
+
+	xmlx "github.com/mattn/go-pkg-xmlx"
 )
 
 //GetRPCMethodsResponse getRPCMethods reponse

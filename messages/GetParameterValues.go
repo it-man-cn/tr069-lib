@@ -3,9 +3,10 @@ package messages
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/jteeuwen/go-pkg-xmlx"
 	"strconv"
 	"time"
+
+	xmlx "github.com/mattn/go-pkg-xmlx"
 )
 
 //GetParameterValues get paramvalues

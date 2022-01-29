@@ -2,7 +2,8 @@ package messages
 
 import (
 	"encoding/xml"
-	"github.com/jteeuwen/go-pkg-xmlx"
+
+	xmlx "github.com/mattn/go-pkg-xmlx"
 )
 
 const (

@@ -1,9 +1,5 @@
 package messages
 
-import (
-	"github.com/jteeuwen/go-pkg-xmlx"
-)
-
 //ParseXML parse xml msg
 func ParseXML(data []byte) (msg Message, err error) {
 	doc := xmlx.New()
