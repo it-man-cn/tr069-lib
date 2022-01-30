@@ -21,9 +21,8 @@ type getParameterNamesBodyStruct struct {
 	Body getParameterNamesStruct `xml:"cwmp:GetParameterNames"`
 }
 
-type parameterNamesStruct struct {
-	Type       string   `xml:"SOAP-ENC:arrayType,attr"`
-	ParamNames []string `xml:"string"`
+type getParameterNamesStruct struct {
+	Params parameterNamesStruct `xml:"ParameterNames"`
 }
 
 //NewGetParameterNames create GetParameterNames object
