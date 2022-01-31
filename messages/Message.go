@@ -91,12 +91,18 @@ type EventNodeStruct struct {
 type ParameterListStruct struct {
 	Type   string                 `xml:"SOAP-ENC:arrayType,attr"`
 	Params []ParameterValueStruct `xml:"ParameterValueStruct"`
+	Names  []ParameterInfoStruct  `xml:"ParameterInfoStruct"`
 }
 
 //ParameterValueStruct param value
 type ParameterValueStruct struct {
 	Name  NodeStruct `xml:"Name"`
 	Value NodeStruct `xml:"Value"`
+}
+
+type ParameterInfoStruct struct {
+	Name     NodeStruct `xml:"Name"`
+	Writable NodeStruct `xml:"Writable"`
 }
 
 //ValueStruct value

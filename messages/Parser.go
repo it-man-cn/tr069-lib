@@ -26,6 +26,9 @@ func ParseXML(data []byte) (msg Message, err error) {
 		case "GetParameterValuesResponse":
 			msg = NewGetParameterValuesResponse()
 			err = msg.Parse(doc)
+		case "GetParameterNamesResponse":
+			msg = NewGetParameterNamesResponse()
+			err = msg.Parse(doc)
 		case "SetParameterValuesResponse":
 			msg = NewSetParameterValuesResponse()
 			err = msg.Parse(doc)

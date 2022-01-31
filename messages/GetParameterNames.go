@@ -10,11 +10,9 @@ import (
 
 //GetParameterNames get paramnames
 type GetParameterNames struct {
-	ID            string
-	Name          string
-	NoMore        int
-	ParameterPath string
-	NextLevel     bool
+	ID     string
+	Name   string
+	NoMore int
 }
 
 type getParameterNamesBodyStruct struct {
@@ -22,7 +20,8 @@ type getParameterNamesBodyStruct struct {
 }
 
 type getParameterNamesStruct struct {
-	Params parameterNamesStruct `xml:"ParameterNames"`
+	ParameterPath string `xml:"ParameterPath"`
+	NextLevel     int    `xml:"NextLevel"`
 }
 
 //NewGetParameterNames create GetParameterNames object
