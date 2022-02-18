@@ -96,7 +96,8 @@ func (msg *GetParameterNamesResponse) Parse(doc *xmlx.Document) error {
 			if len(strings.TrimSpace(param.String())) > 0 {
 				name = param.SelectNode("", "Name").GetValue()
 				writable = false
-				if param.SelectNode("", "Writable").GetValue() == "true" {
+				var writeableVal = param.SelectNode("", "Writable").GetValue()
+				if writeableVal == "true" || writeableVal == "1" {
 					writable = true
 				}
 				params = append(params, ParameterNameStruct{Name: name, Writable: writable})
