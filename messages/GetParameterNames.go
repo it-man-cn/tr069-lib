@@ -13,13 +13,14 @@ type GetParameterNames struct {
 	ID     string
 	Name   string
 	NoMore int
+	Body   GetParameterNamesStruct
 }
 
-type getParameterNamesBodyStruct struct {
-	Body getParameterNamesStruct `xml:"cwmp:GetParameterNames"`
+type GetParameterNamesBodyStruct struct {
+	Body GetParameterNamesStruct `xml:"cwmp:GetParameterNames"`
 }
 
-type getParameterNamesStruct struct {
+type GetParameterNamesStruct struct {
 	ParameterPath string `xml:"ParameterPath"`
 	NextLevel     int    `xml:"NextLevel"`
 }
@@ -55,8 +56,7 @@ func (msg *GetParameterNames) CreateXML() ([]byte, error) {
 	env.XmlnsXsi = "http://www.w3.org/2001/XMLSchema-instance"
 	env.XmlnsCwmp = "urn:dslforum-org:cwmp-1-0"
 	env.Header = HeaderStruct{ID: id, NoMore: msg.NoMore}
-	getParam := getParameterNamesStruct{}
-	env.Body = getParameterNamesBodyStruct{getParam}
+	env.Body = GetParameterNamesBodyStruct{msg.Body}
 	output, err := xml.MarshalIndent(env, "  ", "    ")
 	//output, err := xml.Marshal(env)
 	if err != nil {
