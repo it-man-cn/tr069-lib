@@ -3,6 +3,7 @@ package messages
 import (
 	"encoding/xml"
 	"fmt"
+	"strconv"
 	"time"
 
 	xmlx "github.com/mattn/go-pkg-xmlx"
@@ -67,6 +68,9 @@ func (msg *GetParameterNames) CreateXML() ([]byte, error) {
 
 //Parse decode from xml
 func (msg *GetParameterNames) Parse(doc *xmlx.Document) error {
-	//TODO
+	msg.ID = doc.SelectNode("*", "ID").GetValue()
+	paramsNode := doc.SelectNode("*", "GetParameterNames")
+	msg.Body.ParameterPath = paramsNode.SelectNode("", "ParameterPath").GetValue()
+	msg.Body.NextLevel, _ = strconv.Atoi(paramsNode.SelectNode("", "NextLevel").GetValue())
 	return nil
 }
