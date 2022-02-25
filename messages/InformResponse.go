@@ -24,6 +24,14 @@ type informResponseStruct struct {
 	MaxEnvelopes int `xml:"MaxEnvelopes"`
 }
 
+//NewInform create a inform messages
+func NewInformResponse() *InformResponse {
+	inform := new(InformResponse)
+	inform.ID = inform.GetID()
+	inform.Name = inform.GetName()
+	return inform
+}
+
 //GetID get msg id
 func (msg *InformResponse) GetID() string {
 	if len(msg.ID) < 1 {
@@ -50,7 +58,7 @@ func (msg *InformResponse) CreateXML() ([]byte, error) {
 	infromResp := informResponseStruct{MaxEnvelopes: msg.MaxEnvelopes}
 	env.Body = informResponseBodyStruct{infromResp}
 	//output, err := xml.Marshal(env)
-	output, err := xml.MarshalIndent(env, "  ", "    ")
+	output, err := xml.Marshal(env)
 	if err != nil {
 		return nil, err
 	}
