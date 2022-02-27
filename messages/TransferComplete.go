@@ -91,7 +91,7 @@ func (msg *TransferComplete) CreateXML() ([]byte, error) {
 //Parse decode from xml
 func (msg *TransferComplete) Parse(doc *xmlx.Document) error {
 	msg.ID = doc.SelectNode("*", "ID").GetValue()
-	fmt.Println(doc.String())
+	//fmt.Println(doc.String())
 	msg.CommandKey = doc.SelectNode("*", "CommandKey").GetValue()
 	msg.CompleteTime = doc.SelectNode("*", "CompleteTime").GetValue()
 	msg.StartTime = doc.SelectNode("*", "StartTime").GetValue()
