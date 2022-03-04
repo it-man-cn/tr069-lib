@@ -33,7 +33,7 @@ type Download struct {
 }
 
 type downloadBodyStruct struct {
-	Body downloadStruct `xml:"cwmp:Download"`
+	Body downloadStruct `xml:"cwmp:Download 1"`
 }
 
 type downloadStruct struct {
