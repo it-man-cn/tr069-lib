@@ -116,7 +116,10 @@ func (msg *Inform) CreateXML() ([]byte, error) {
 
 //Parse decode from xml
 func (msg *Inform) Parse(doc *xmlx.Document) error {
-	msg.ID = doc.SelectNode("*", "ID").GetValue()
+	id := doc.SelectNode("*", "ID")
+	if id != nil {
+		msg.ID = id.GetValue()
+	}
 	deviceNode := doc.SelectNode("*", "DeviceId")
 	if len(strings.TrimSpace(deviceNode.String())) > 0 {
 		msg.Manufacturer = deviceNode.SelectNode("", "Manufacturer").GetValue()
