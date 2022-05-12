@@ -9,6 +9,8 @@ import (
 const (
 	//XsdString string type
 	XsdString string = "xsd:string"
+	//XsdHexBinary hexbinary type
+	XsdHexBinary string = "xsd:hexBinary"
 	//XsdUnsignedint uint type
 	XsdUnsignedint string = "xsd:unsignedInt"
 )
