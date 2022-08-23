@@ -8,22 +8,21 @@ import (
 	xmlx "github.com/mattn/go-pkg-xmlx"
 )
 
-//TransferCompleteResponse transferComplete response
-type TransferCompleteResponse struct {
+//FactoryReset reboot cpe
+type FactoryReset struct {
 	ID     string
 	Name   string
 	NoMore int
 }
 
-type transferCompleteResponseBodyStruct struct {
-	Body transferCompleteResponseStruct `xml:"cwmp:TransferCompleteResponse"`
+type factoryResetBodyStruct struct {
+	Body factoryResetStruct `xml:"cwmp:FactoryReset"`
 }
 
-type transferCompleteResponseStruct struct {
-}
+type factoryResetStruct struct{}
 
 //GetID get msg id
-func (msg *TransferCompleteResponse) GetID() string {
+func (msg *FactoryReset) GetID() string {
 	if len(msg.ID) < 1 {
 		msg.ID = fmt.Sprintf("ID:intrnl.unset.id.%s%d.%d", msg.GetName(), time.Now().Unix(), time.Now().UnixNano())
 	}
@@ -31,12 +30,12 @@ func (msg *TransferCompleteResponse) GetID() string {
 }
 
 //GetName get msg name
-func (msg *TransferCompleteResponse) GetName() string {
-	return "TransferCompleteResponse"
+func (msg *FactoryReset) GetName() string {
+	return "FactoryReset"
 }
 
 //CreateXML encode into xml
-func (msg *TransferCompleteResponse) CreateXML() ([]byte, error) {
+func (msg *FactoryReset) CreateXML() ([]byte, error) {
 	env := Envelope{}
 	env.XmlnsEnv = "http://schemas.xmlsoap.org/soap/envelope/"
 	env.XmlnsEnc = "http://schemas.xmlsoap.org/soap/encoding/"
@@ -45,10 +44,8 @@ func (msg *TransferCompleteResponse) CreateXML() ([]byte, error) {
 	env.XmlnsCwmp = "urn:dslforum-org:cwmp-1-0"
 	id := IDStruct{Attr: "1", Value: msg.GetID()}
 	env.Header = HeaderStruct{ID: id, NoMore: msg.NoMore}
-	transf := transferCompleteResponseStruct{}
-	env.Body = transferCompleteResponseBodyStruct{transf}
-	//output, err := xml.Marshal(env)
-	output, err := xml.MarshalIndent(env, "  ", "    ")
+	env.Body = factoryResetBodyStruct{}
+	output, err := xml.Marshal(env)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +53,7 @@ func (msg *TransferCompleteResponse) CreateXML() ([]byte, error) {
 }
 
 //Parse decode from xml
-func (msg *TransferCompleteResponse) Parse(doc *xmlx.Document) error {
+func (msg *FactoryReset) Parse(doc *xmlx.Document) error {
 	//TODO
 	return nil
 }

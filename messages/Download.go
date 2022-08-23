@@ -3,8 +3,9 @@ package messages
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/jteeuwen/go-pkg-xmlx"
 	"time"
+
+	xmlx "github.com/mattn/go-pkg-xmlx"
 )
 
 //Download type
@@ -32,7 +33,7 @@ type Download struct {
 }
 
 type downloadBodyStruct struct {
-	Body downloadStruct `xml:"cwmp:Download"`
+	Body downloadStruct `xml:"cwmp:Download 1"`
 }
 
 type downloadStruct struct {

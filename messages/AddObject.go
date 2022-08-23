@@ -8,22 +8,26 @@ import (
 	xmlx "github.com/mattn/go-pkg-xmlx"
 )
 
-//TransferCompleteResponse transferComplete response
-type TransferCompleteResponse struct {
-	ID     string
-	Name   string
-	NoMore int
+//AddObject adds object to cpe
+type AddObject struct {
+	ID           string
+	Name         string
+	NoMore       int
+	ObjectName   string
+	ParameterKey string
 }
 
-type transferCompleteResponseBodyStruct struct {
-	Body transferCompleteResponseStruct `xml:"cwmp:TransferCompleteResponse"`
+type addObjectBodyStruct struct {
+	Body addObjectStruct `xml:"cwmp:AddObject"`
 }
 
-type transferCompleteResponseStruct struct {
+type addObjectStruct struct {
+	ObjectName   string
+	ParameterKey string
 }
 
 //GetID get msg id
-func (msg *TransferCompleteResponse) GetID() string {
+func (msg *AddObject) GetID() string {
 	if len(msg.ID) < 1 {
 		msg.ID = fmt.Sprintf("ID:intrnl.unset.id.%s%d.%d", msg.GetName(), time.Now().Unix(), time.Now().UnixNano())
 	}
@@ -31,12 +35,12 @@ func (msg *TransferCompleteResponse) GetID() string {
 }
 
 //GetName get msg name
-func (msg *TransferCompleteResponse) GetName() string {
-	return "TransferCompleteResponse"
+func (msg *AddObject) GetName() string {
+	return "AddObject"
 }
 
 //CreateXML encode into xml
-func (msg *TransferCompleteResponse) CreateXML() ([]byte, error) {
+func (msg *AddObject) CreateXML() ([]byte, error) {
 	env := Envelope{}
 	env.XmlnsEnv = "http://schemas.xmlsoap.org/soap/envelope/"
 	env.XmlnsEnc = "http://schemas.xmlsoap.org/soap/encoding/"
@@ -45,10 +49,9 @@ func (msg *TransferCompleteResponse) CreateXML() ([]byte, error) {
 	env.XmlnsCwmp = "urn:dslforum-org:cwmp-1-0"
 	id := IDStruct{Attr: "1", Value: msg.GetID()}
 	env.Header = HeaderStruct{ID: id, NoMore: msg.NoMore}
-	transf := transferCompleteResponseStruct{}
-	env.Body = transferCompleteResponseBodyStruct{transf}
-	//output, err := xml.Marshal(env)
-	output, err := xml.MarshalIndent(env, "  ", "    ")
+	addObject := addObjectStruct{ObjectName: msg.ObjectName, ParameterKey: msg.ParameterKey}
+	env.Body = addObjectBodyStruct{addObject}
+	output, err := xml.Marshal(env)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +59,7 @@ func (msg *TransferCompleteResponse) CreateXML() ([]byte, error) {
 }
 
 //Parse decode from xml
-func (msg *TransferCompleteResponse) Parse(doc *xmlx.Document) error {
+func (msg *AddObject) Parse(doc *xmlx.Document) error {
 	//TODO
 	return nil
 }

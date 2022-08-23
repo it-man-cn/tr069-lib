@@ -2,12 +2,15 @@ package messages
 
 import (
 	"encoding/xml"
-	"github.com/jteeuwen/go-pkg-xmlx"
+
+	xmlx "github.com/mattn/go-pkg-xmlx"
 )
 
 const (
 	//XsdString string type
 	XsdString string = "xsd:string"
+	//XsdHexBinary hexbinary type
+	XsdHexBinary string = "xsd:hexBinary"
 	//XsdUnsignedint uint type
 	XsdUnsignedint string = "xsd:unsignedInt"
 )
@@ -90,12 +93,18 @@ type EventNodeStruct struct {
 type ParameterListStruct struct {
 	Type   string                 `xml:"SOAP-ENC:arrayType,attr"`
 	Params []ParameterValueStruct `xml:"ParameterValueStruct"`
+	Names  []ParameterInfoStruct  `xml:"ParameterInfoStruct"`
 }
 
 //ParameterValueStruct param value
 type ParameterValueStruct struct {
 	Name  NodeStruct `xml:"Name"`
 	Value NodeStruct `xml:"Value"`
+}
+
+type ParameterInfoStruct struct {
+	Name     NodeStruct `xml:"Name"`
+	Writable NodeStruct `xml:"Writable"`
 }
 
 //ValueStruct value

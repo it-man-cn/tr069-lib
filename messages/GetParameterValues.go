@@ -3,9 +3,11 @@ package messages
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/jteeuwen/go-pkg-xmlx"
 	"strconv"
+	"strings"
 	"time"
+
+	xmlx "github.com/mattn/go-pkg-xmlx"
 )
 
 //GetParameterValues get paramvalues
@@ -79,6 +81,19 @@ func (msg *GetParameterValues) CreateXML() ([]byte, error) {
 
 //Parse decode from xml
 func (msg *GetParameterValues) Parse(doc *xmlx.Document) error {
-	//TODO
+	msg.ID = doc.SelectNode("*", "ID").GetValue()
+	paramsNode := doc.SelectNode("*", "ParameterNames")
+	if len(strings.TrimSpace(paramsNode.String())) > 0 {
+		params := make([]string, 0)
+		var name string
+		for _, param := range paramsNode.Children {
+			if len(strings.TrimSpace(param.String())) > 0 {
+				name = param.GetValue()
+				params = append(params, name)
+			}
+
+		}
+		msg.ParameterNames = params
+	}
 	return nil
 }

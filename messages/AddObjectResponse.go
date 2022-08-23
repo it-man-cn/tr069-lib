@@ -8,29 +8,29 @@ import (
 	xmlx "github.com/mattn/go-pkg-xmlx"
 )
 
-//RebootResponse reboot response
-type RebootResponse struct {
+//AddObjectResponse add object response
+type AddObjectResponse struct {
 	ID   string
 	Name string
 }
 
-type rebootResponseBodyStruct struct {
-	Body rebootResponseStruct `xml:"cwmp:TransferCompleteResponse"`
+type addObjectResponseBodyStruct struct {
+	Body addObjectResponseStruct `xml:"cwmp:AddObjectResponse"`
 }
 
-type rebootResponseStruct struct {
+type addObjectResponseStruct struct {
 }
 
-//NewRebootResponse create RebootResponse object
-func NewRebootResponse() (m *RebootResponse) {
-	m = &RebootResponse{}
+//NewAddObjectResponse create AddObjectResponse object
+func NewAddObjectResponse() (m *AddObjectResponse) {
+	m = &AddObjectResponse{}
 	m.ID = m.GetID()
 	m.Name = m.GetName()
 	return m
 }
 
 //GetID get msg id
-func (msg *RebootResponse) GetID() string {
+func (msg *AddObjectResponse) GetID() string {
 	if len(msg.ID) < 1 {
 		msg.ID = fmt.Sprintf("ID:intrnl.unset.id.%s%d.%d", msg.GetName(), time.Now().Unix(), time.Now().UnixNano())
 	}
@@ -38,12 +38,12 @@ func (msg *RebootResponse) GetID() string {
 }
 
 //GetName get msg type
-func (msg *RebootResponse) GetName() string {
-	return "RebootResponse"
+func (msg *AddObjectResponse) GetName() string {
+	return "AddObjectResponse"
 }
 
 //CreateXML encode into xml
-func (msg *RebootResponse) CreateXML() ([]byte, error) {
+func (msg *AddObjectResponse) CreateXML() ([]byte, error) {
 	env := Envelope{}
 	env.XmlnsEnv = "http://schemas.xmlsoap.org/soap/envelope/"
 	env.XmlnsEnc = "http://schemas.xmlsoap.org/soap/encoding/"
@@ -52,10 +52,9 @@ func (msg *RebootResponse) CreateXML() ([]byte, error) {
 	env.XmlnsCwmp = "urn:dslforum-org:cwmp-1-0"
 	id := IDStruct{Attr: "1", Value: msg.GetID()}
 	env.Header = HeaderStruct{ID: id}
-	reboot := rebootResponseStruct{}
-	env.Body = rebootResponseBodyStruct{reboot}
-	//output, err := xml.Marshal(env)
-	output, err := xml.MarshalIndent(env, "  ", "    ")
+	addobj := addObjectResponseStruct{}
+	env.Body = addObjectResponseBodyStruct{addobj}
+	output, err := xml.Marshal(env)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +62,7 @@ func (msg *RebootResponse) CreateXML() ([]byte, error) {
 }
 
 //Parse decode from xml
-func (msg *RebootResponse) Parse(doc *xmlx.Document) error {
+func (msg *AddObjectResponse) Parse(doc *xmlx.Document) error {
 	msg.ID = doc.SelectNode("*", "ID").GetValue()
 	return nil
 }

@@ -3,8 +3,9 @@ package messages
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/jteeuwen/go-pkg-xmlx"
 	"time"
+
+	xmlx "github.com/mattn/go-pkg-xmlx"
 )
 
 //InformResponse infrom response
@@ -21,6 +22,14 @@ type informResponseBodyStruct struct {
 
 type informResponseStruct struct {
 	MaxEnvelopes int `xml:"MaxEnvelopes"`
+}
+
+//NewInform create a inform messages
+func NewInformResponse() *InformResponse {
+	inform := new(InformResponse)
+	inform.ID = inform.GetID()
+	inform.Name = inform.GetName()
+	return inform
 }
 
 //GetID get msg id
@@ -49,7 +58,7 @@ func (msg *InformResponse) CreateXML() ([]byte, error) {
 	infromResp := informResponseStruct{MaxEnvelopes: msg.MaxEnvelopes}
 	env.Body = informResponseBodyStruct{infromResp}
 	//output, err := xml.Marshal(env)
-	output, err := xml.MarshalIndent(env, "  ", "    ")
+	output, err := xml.Marshal(env)
 	if err != nil {
 		return nil, err
 	}
