@@ -6,7 +6,7 @@ go:
 
 install:
   - go get -u github.com/golang/lint/golint
-  - go get -u github.com/jteeuwen/go-pkg-xmlx
+  - go get -u github.com/mattn/go-pkg-xmlx
   
 script:
   - $HOME/gopath/bin/golint ./...

@@ -3,8 +3,9 @@ package messages
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/jteeuwen/go-pkg-xmlx"
 	"time"
+
+	xmlx "github.com/mattn/go-pkg-xmlx"
 )
 
 //Fault error response
@@ -95,8 +96,8 @@ func (msg *Fault) CreateXML() ([]byte, error) {
 		FaultDetail: detail,
 	}
 	env.Body = faultBodyStruct{fault}
-	output, err := xml.MarshalIndent(env, "  ", "    ")
-	//output, err := xml.Marshal(env)
+	//output, err := xml.MarshalIndent(env, "  ", "    ")
+	output, err := xml.Marshal(env)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +119,11 @@ func (msg *Fault) Parse(doc *xmlx.Document) error {
 		msg.SetParameterValuesFault.FaultCode = setParaFaultNode.SelectNode("*", "FaultCode").GetValue()
 		msg.SetParameterValuesFault.FaultString = setParaFaultNode.SelectNode("*", "FaultString").GetValue()
 		msg.SetParameterValuesFault.ParameterName = setParaFaultNode.SelectNode("*", "ParameterName").GetValue()
-		msg.SetParameterValuesFault.ParameterKey = setParaFaultNode.SelectNode("*", "ParameterKey").GetValue()
+		// Sometime the ParameterKey is not present on some devices
+		pk := setParaFaultNode.SelectNode("*", "ParameterKey")
+		if pk != nil {
+		  msg.SetParameterValuesFault.ParameterKey = pk.GetValue()
+		}
 	}
 	return nil
 }

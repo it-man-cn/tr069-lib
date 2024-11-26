@@ -3,8 +3,9 @@ package messages
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/jteeuwen/go-pkg-xmlx"
 	"time"
+
+	xmlx "github.com/mattn/go-pkg-xmlx"
 )
 
 //Reboot reboot cpe
@@ -48,8 +49,8 @@ func (msg *Reboot) CreateXML() ([]byte, error) {
 	env.Header = HeaderStruct{ID: id, NoMore: msg.NoMore}
 	reboot := rebootStruct{CommandKey: msg.CommandKey}
 	env.Body = rebootBodyStruct{reboot}
-	//output, err := xml.Marshal(env)
-	output, err := xml.MarshalIndent(env, "  ", "    ")
+	output, err := xml.Marshal(env)
+	//output, err := xml.MarshalIndent(env, "  ", "    ")
 	if err != nil {
 		return nil, err
 	}

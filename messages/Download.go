@@ -3,8 +3,9 @@ package messages
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/jteeuwen/go-pkg-xmlx"
 	"time"
+
+	xmlx "github.com/mattn/go-pkg-xmlx"
 )
 
 //Download type
@@ -46,6 +47,13 @@ type downloadStruct struct {
 	DelaySeconds   int
 	SuccessURL     string
 	FailureURL     string
+}
+
+func NewDownload() *Download {
+	download := new(Download)
+	download.ID = download.GetID()
+	download.Name = download.GetName()
+	return download
 }
 
 //GetID get download msg id(tr069 msg id)
@@ -93,6 +101,9 @@ func (msg *Download) CreateXML() ([]byte, error) {
 
 //Parse parse from xml
 func (msg *Download) Parse(doc *xmlx.Document) error {
-	//TODO
+	msg.ID = doc.SelectNode("*", "ID").GetValue()
+	msg.CommandKey = doc.SelectNode("*", "CommandKey").GetValue()
+	msg.FileType = doc.SelectNode("*", "FileType").GetValue()
+	msg.URL = doc.SelectNode("*", "URL").GetValue()
 	return nil
 }
